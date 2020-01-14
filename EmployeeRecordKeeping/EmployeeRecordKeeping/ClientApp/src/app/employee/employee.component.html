@@ -1,0 +1,131 @@
+<h3>Employee List</h3>
+<p>(For testing and visualization only, NO VALIDATION in terms of data entry and data types and not in reactive forms)</p>
+<div *ngIf="isAddButtonClicked">
+  <button mat-raised-button color="primary" (click)="generateRandomData()">Generate random data</button>
+  <hr />
+  <div style="display: flex;flex-direction: column;">
+    <mat-form-field>
+      <input matInput [(ngModel)]="model.fullName" placeholder="Full Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="model.address" placeholder="Address">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="model.age" type="number" placeholder="Age">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="model.position" placeholder="Position">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="model.department" placeholder="Department">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <textarea matInput [(ngModel)]="model.notes" placeholder="Leave a note"></textarea>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button color="primary" (click)="saveEmployee();">Submit</button>
+  <button mat-raised-button color="primary" (click)="isAddButtonClicked=false">Cancel</button>
+</div>
+<hr />
+<br />
+<button style="margin-bottom:20px" mat-raised-button (click)="isAddButtonClicked=true" [disabled]="isAddButtonClicked">Add Employee</button>
+<p *ngIf="!employeeList"><em>Loading...</em></p>
+
+<table style="width:100%" id="employeeDataTable" class='table table-striped table-responsive' *ngIf="employeeList">
+</table>
+
+<hr />
+<br />
+
+<h3>Search Employees</h3>
+<div>
+  <div class="wrap">
+    <div class="search">
+      <input [(ngModel)]="searchFilterModel.searchTerm" type="text" class="searchTerm" (keyup.enter)="searchEmployees()" placeholder="What are you looking for? Lets find it using Elasticsearch">
+      <button type="submit" class="searchButton" (click)="searchEmployees()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </div>
+  <br />
+  <mat-form-field>
+    <mat-select placeholder="Filter type" [(ngModel)]="searchFilterModel.filterTypeId">
+      <mat-option *ngFor="let filterModel of filterType" [value]="filterModel.id">
+        {{filterModel.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+  <br />
+  <br />
+</div>
+
+
+<div>
+  <h5>Results : </h5>
+</div>
+<hr />
+<div style="padding-bottom:500px" *ngIf="!hasNoResults">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-1">
+        <b>Score</b>
+      </div>
+      <div class="col-sm-2">
+        <b>Full Name</b>
+      </div>
+      <div class="col-sm-2">
+        <b>Address</b>
+      </div> 
+      <div class="col-sm-1">
+        <b>Age</b>
+      </div>
+      <div class="col-sm-2">
+        <b>Position</b>
+      </div>
+      <div class="col-sm-2">
+        <b>Department</b>
+      </div>
+      <div class="col-sm-2">
+        <b>Note</b>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row" style="padding-bottom:5px">
+    <div class="col-sm-12" *ngFor="let item of searchResults.searchOutPut">
+      <div class="col-sm-1" [innerHTML]="item.score">
+         
+      </div>
+      <div class="col-sm-2" [innerHTML]="item.stringSearchResults.fullName">
+
+      </div>
+      <div class="col-sm-2" [innerHTML]="item.stringSearchResults.address">
+
+      </div>
+      <div class="col-sm-1" [innerHTML]="item.stringSearchResults.age">
+
+      </div>
+      <div class="col-sm-2" [innerHTML]="item.stringSearchResults.position">
+  
+      </div>
+      <div class="col-sm-2" [innerHTML]="item.stringSearchResults.department">
+      
+      </div>
+      <div class="col-sm-2" [innerHTML]="item.stringSearchResults.notes">
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="hasNoResults" class="row" style="padding-left: 18px;">
+  <h4>No Results Found.</h4>
+</div>
+
+
