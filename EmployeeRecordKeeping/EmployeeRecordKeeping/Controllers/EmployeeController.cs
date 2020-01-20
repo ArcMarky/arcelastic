@@ -15,7 +15,7 @@ namespace EmployeeRecordKeeping.Controllers
     * Description:   Employee Management API
     *                Commented methods are unused.            
     * History:
-    *   01-07-2020  MarkYu    Created.
+    *   01-07-2020  MarkYu    Created. 
     ***********************************************************************/
     [Route("api/[controller]")]
     public class EmployeeController : Controller

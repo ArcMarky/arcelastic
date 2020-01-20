@@ -13,7 +13,7 @@ namespace EmployeeRecordKeeping.ViewModel
         //public bool DoesNotContain { get; set; }
         public string SearchTerm { get; set; }
         public int FilterTypeId { get; set; }
-        //0 = all, 2 = smart search , 3 = highlight match keywords, 4 = must not match
+        //0 = all, 2 = smart search , 3 = highlight match keywords, 4 = must not match, 5 = language search
     }
     public class ElasticSearchResultsSummary
     {

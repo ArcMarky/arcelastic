@@ -138,6 +138,14 @@ namespace EmployeeRecordKeeping.BLL.Services
                         response.Data = searchResults.Data;
                     }
                 }
+                else if (model.FilterTypeId == 5)
+                {
+                    var searchResults = await GetLanguageSearchElasticEmployee(query);
+                    if (searchResults.IsSuccess)
+                    {
+                        response.Data = searchResults.Data;
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -275,7 +283,7 @@ namespace EmployeeRecordKeeping.BLL.Services
                                    bs => bs.Match(p => p.Field(f => f.Address).Query(query)),
                                    bs => bs.Match(p => p.Field(f => f.Notes).Query(query)),
                                    bs => bs.Match(p => p.Field(f => f.Age).Query(query)),
-                                   bs => bs.Match(p => p.Field(f => f.Position).Query(query)),
+                                   bs => bs.Match(p => p.Field(f => f.Department).Query(query)),
                                    bs => bs.Match(p => p.Field(f => f.Position).Query(query))))));
                 response.Data = TransmuteEmployeeElasticResults(searchResults).Data;
             }
@@ -306,7 +314,7 @@ namespace EmployeeRecordKeeping.BLL.Services
                                    bs => bs.Match(p => p.Field(f => f.Address).Analyzer("my_synonyms").Query(query)),
                                    bs => bs.Match(p => p.Field(f => f.Notes).Analyzer("my_synonyms").Query(query)),
                                    bs => bs.Match(p => p.Field(f => f.Age).Analyzer("my_synonyms").Query(query)),
-                                   bs => bs.Match(p => p.Field(f => f.Position).Analyzer("my_synonyms").Query(query)),
+                                   bs => bs.Match(p => p.Field(f => f.Department).Analyzer("my_synonyms").Query(query)),
                                    bs => bs.Match(p => p.Field(f => f.Position).Analyzer("my_synonyms").Query(query))))));
                 response.Data = TransmuteEmployeeElasticResults(searchResults).Data;
             }
@@ -338,7 +346,7 @@ namespace EmployeeRecordKeeping.BLL.Services
                                     bs => bs.Match(p => p.Field(f => f.Address).Query(query)),
                                     bs => bs.Match(p => p.Field(f => f.Notes).Query(query)),
                                     bs => bs.Match(p => p.Field(f => f.Age).Query(query)),
-                                    bs => bs.Match(p => p.Field(f => f.Position).Query(query)),
+                                    bs => bs.Match(p => p.Field(f => f.Department).Query(query)),
                                     bs => bs.Match(p => p.Field(f => f.Position).Query(query)
                                     ))))
                                     .Highlight(x =>
@@ -394,18 +402,6 @@ namespace EmployeeRecordKeeping.BLL.Services
                                             .Field(k => k.FullName)
                                             .Query(query))),
                                        fs =>
-                                          fs.Field(y => y.Notes)
-                                            .Type("plain")
-                                            .FragmentSize(150)
-                                            .ForceSource()
-                                            .NumberOfFragments(3)
-                                            .Fragmenter(HighlighterFragmenter.Span)
-                                            .NoMatchSize(150)
-                                            .HighlightQuery(m => m
-                                            .Match(b => b
-                                            .Field(k => k.Notes)
-                                            .Query(query))),
-                                       fs =>
                                            fs.Field(y => y.Position)
                                             .Type("plain")
                                             .FragmentSize(150)
@@ -447,7 +443,7 @@ namespace EmployeeRecordKeeping.BLL.Services
                                   bs => bs.Match(p => p.Field(f => f.Address).Query(query)),
                                   bs => bs.Match(p => p.Field(f => f.Notes).Query(query)),
                                   bs => bs.Match(p => p.Field(f => f.Age).Query(query)),
-                                  bs => bs.Match(p => p.Field(f => f.Position).Query(query)),
+                                  bs => bs.Match(p => p.Field(f => f.Department).Query(query)),
                                   bs => bs.Match(p => p.Field(f => f.Position).Query(query)
                                   )))));
                 response.Data = TransmuteEmployeeElasticResults(searchResults).Data;
@@ -458,7 +454,7 @@ namespace EmployeeRecordKeeping.BLL.Services
             }
             return response;
         }
-
+       
         #endregion
     }
 }
