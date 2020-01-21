@@ -138,14 +138,14 @@ namespace EmployeeRecordKeeping.BLL.Services
                         response.Data = searchResults.Data;
                     }
                 }
-                else if (model.FilterTypeId == 5)
-                {
-                    var searchResults = await GetLanguageSearchElasticEmployee(query);
-                    if (searchResults.IsSuccess)
-                    {
-                        response.Data = searchResults.Data;
-                    }
-                }
+                //else if (model.FilterTypeId == 5)
+                //{
+                //    var searchResults = await GetLanguageSearchElasticEmployee(query);
+                //    if (searchResults.IsSuccess)
+                //    {
+                //        response.Data = searchResults.Data;
+                //    }
+                //}
             }
             catch (Exception e)
             {
